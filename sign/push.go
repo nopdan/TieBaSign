@@ -30,7 +30,10 @@ func Push(msg, chatID, key string) error {
 		return fmt.Errorf("Push: %w", err)
 	}
 	var ok isok
-	json.Unmarshal(t, &ok)
+	err = json.Unmarshal(t, &ok)
+	if err != nil {
+		return fmt.Errorf("Push: %w", err)
+	}
 	if !ok.OK {
 		return Pusherr
 	}

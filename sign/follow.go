@@ -12,7 +12,6 @@ func GetFollow(BDUSS string) ([]string, error) {
 		return nil, fmt.Errorf("GetFollow: %w", err)
 	}
 	var like Like
-	fmt.Println(string(b))
 	err = json.Unmarshal(b, &like)
 	if err != nil {
 		return nil, fmt.Errorf("GetFollow: %w", err)
