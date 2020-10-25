@@ -69,7 +69,7 @@ func main() {
 		if !ok {
 			panic("签到失败")
 		}
-		msg := "第" + strconv.Itoa(zanhao) + "个账号签到成功"
+		msg := "第" + strconv.Itoa(zanhao) + "个账号签到成功。"
 		log.Println(msg)
 		sw.WriteString(msg + "\n\n")
 	}
@@ -84,7 +84,7 @@ func toSign(name, bduss, tbs string, errCh chan<- string, limit <-chan struct{},
 	if err != nil {
 		errCh <- err.Error()
 	}
-	msgCh <- name + "签到成功"
+	msgCh <- name + "吧签到成功"
 	<-limit
 }
 
