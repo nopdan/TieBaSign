@@ -48,18 +48,21 @@ func main() {
 				}
 			}()
 			var s int
-			select {
-			case msg := <-msgCh:
-				sw.WriteString(msg + "\n")
-				log.Println(msg)
-				ispush = true
-				s++
-				if s == sum {
-					ok = true
-					break
+			for {
+				select {
+				case msg := <-msgCh:
+					sw.WriteString(msg + "\n")
+					log.Println(msg)
+					ispush = true
+					s++
+					if s == sum {
+						ok = true
+						break
+					}
+				case err := <-errCh:
+					panic(err)
 				}
-			case err := <-errCh:
-				panic(err)
+				break
 			}
 			break
 		}
