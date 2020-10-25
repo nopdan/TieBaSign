@@ -73,9 +73,16 @@ func main() {
 		log.Println(msg)
 		sw.WriteString(msg + "\n\n")
 	}
-	if ispush {
+	if ispush && tgkey != "" {
 		msg := strings.TrimSpace(sw.String())
-		sign.Push(msg, tgchatID, tgkey)
+		for i := 0; i < 3; i++ {
+			err := sign.Push(msg, tgchatID, tgkey)
+			if err != nil {
+				log.Println(err)
+				continue
+			}
+			break
+		}
 	}
 }
 
