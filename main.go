@@ -75,13 +75,18 @@ func main() {
 	}
 	if ispush && tgkey != "" {
 		msg := strings.TrimSpace(sw.String())
+		var ok bool
 		for i := 0; i < 3; i++ {
 			err := sign.Push(msg, tgchatID, tgkey)
 			if err != nil {
 				log.Println(err)
 				continue
 			}
+			ok = true
 			break
+		}
+		if !ok {
+			panic("推送失败")
 		}
 	}
 }
