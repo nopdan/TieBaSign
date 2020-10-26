@@ -16,7 +16,7 @@ func main() {
 	zanhao := 0
 	sw := strings.Builder{}
 	sw.WriteString("百度贴吧自动签到\n\n")
-	msg := `一共需要给 ` + strconv.Itoa(len(BDUSS)+1) + ` 个账号签到。`
+	msg := `一共需要给 ` + strconv.Itoa(len(BDUSS)) + ` 个账号签到。`
 	log.Println(msg)
 	sw.WriteString(msg + "\n\n")
 	for _, v := range BDUSS {
