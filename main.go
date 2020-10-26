@@ -62,7 +62,9 @@ func main() {
 				case err := <-errCh:
 					panic(err)
 				}
-				break
+				if !ok {
+                                 break
+                                }
 			}
 			break
 		}
