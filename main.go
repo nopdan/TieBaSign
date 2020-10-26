@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 
 	"github.com/xxmdhs/tiebasign/sign"
 )
@@ -24,14 +25,27 @@ func main() {
 		zanhao++
 	finish:
 		for i := 0; i < 3; i++ {
-			tbs, err := sign.Getbs(v)
-			if err != nil {
-				log.Println(err)
-				continue
-			}
-			list, err := sign.GetFollow(v)
-			if err != nil {
-				log.Println(err)
+			var err1, err2 error
+			var wait sync.WaitGroup
+			var tbs string
+			var list []string
+			wait.Add(2)
+			go func() {
+				tbs, err1 = sign.Getbs(v)
+				if err1 != nil {
+					log.Println(err1)
+				}
+				wait.Done()
+			}()
+			go func() {
+				list, err2 = sign.GetFollow(v)
+				if err2 != nil {
+					log.Println(err2)
+				}
+				wait.Done()
+			}()
+			wait.Wait()
+			if err1 != nil || err2 != nil {
 				continue
 			}
 			errCh := make(chan string, 10)
