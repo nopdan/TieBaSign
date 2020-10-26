@@ -19,6 +19,7 @@ func main() {
 	for _, v := range BDUSS {
 		ok = false
 		zanhao++
+	finish:
 		for i := 0; i < 3; i++ {
 			tbs, err := sign.Getbs(v)
 			if err != nil {
@@ -57,16 +58,12 @@ func main() {
 					s++
 					if s == sum {
 						ok = true
-						break
+						break finish
 					}
 				case err := <-errCh:
 					panic(err)
 				}
-				if !ok {
-                                 break
-                                }
 			}
-			break
 		}
 		if !ok {
 			panic("签到失败")
