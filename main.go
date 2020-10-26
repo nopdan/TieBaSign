@@ -16,6 +16,9 @@ func main() {
 	zanhao := 0
 	sw := strings.Builder{}
 	sw.WriteString("百度贴吧自动签到\n\n")
+	msg := `一共需要给 ` + strconv.Itoa(len(BDUSS)+1) + ` 个账号签到。`
+	log.Println(msg)
+	sw.WriteString(msg + "\n\n")
 	for _, v := range BDUSS {
 		ok = false
 		zanhao++
@@ -68,10 +71,13 @@ func main() {
 		if !ok {
 			panic("签到失败")
 		}
-		msg := "第" + strconv.Itoa(zanhao) + "个账号签到成功。"
+		msg := "第" + strconv.Itoa(zanhao) + "个账号签到完成。"
 		log.Println(msg)
 		sw.WriteString(msg + "\n\n")
 	}
+	msg = `全部账号签到完成。`
+	log.Println(msg)
+	sw.WriteString(msg + "\n\n")
 	if ispush && tgkey != "" {
 		msg := strings.TrimSpace(sw.String())
 		var ok bool
