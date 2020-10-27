@@ -75,7 +75,8 @@ func main() {
 						break finish
 					}
 				case err := <-errCh:
-					panic(err)
+					log.Println(err)
+					continue finish
 				}
 			}
 		}
