@@ -12,16 +12,13 @@ import (
 )
 
 func main() {
-	var ok bool
 	var ispush bool
-	zanhao := 0
 	sw := strings.Builder{}
 	sw.WriteString("百度贴吧自动签到\n\n")
 	msg := `一共需要给 ` + strconv.Itoa(len(BDUSS)) + ` 个账号签到。`
 	sw.WriteString(msg + "\n\n")
-	for _, v := range BDUSS {
-		ok = false
-		zanhao++
+	for zanhao, v := range BDUSS {
+		var ok bool
 	finish:
 		for i := 0; i < 3; i++ {
 			var err1, err2 error
@@ -51,7 +48,7 @@ func main() {
 			limit := make(chan struct{}, 10)
 			msgCh := make(chan string, 10)
 			sum := len(list)
-			msg := "第" + strconv.Itoa(zanhao) + "个账号需要给" + strconv.Itoa(sum) + "个贴吧签到。"
+			msg := "第" + strconv.Itoa(zanhao+1) + "个账号需要给" + strconv.Itoa(sum) + "个贴吧签到。"
 			sw.WriteString(msg + "\n")
 			if sum == 0 {
 				ok = true
@@ -83,7 +80,7 @@ func main() {
 		if !ok {
 			panic("签到失败")
 		}
-		msg := "第" + strconv.Itoa(zanhao) + "个账号签到完成。"
+		msg := "第" + strconv.Itoa(zanhao+1) + "个账号签到完成。"
 		sw.WriteString(msg + "\n\n")
 	}
 	msg = `全部账号签到完成。`
