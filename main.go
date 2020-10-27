@@ -44,7 +44,7 @@ func main() {
 			if err1 != nil || err2 != nil {
 				continue
 			}
-			errCh := make(chan string, 10)
+			errCh := make(chan error, 10)
 			limit := make(chan struct{}, 10)
 			msgCh := make(chan string, 10)
 			sum := len(list)
@@ -105,10 +105,10 @@ func main() {
 	}
 }
 
-func toSign(name, bduss, tbs string, errCh chan<- string, limit <-chan struct{}, msgCh chan<- string) {
+func toSign(name, bduss, tbs string, errCh chan<- error, limit <-chan struct{}, msgCh chan<- string) {
 	err := sign.Tosign(name, bduss, tbs)
 	if err != nil {
-		errCh <- err.Error()
+		errCh <- err
 	}
 	msgCh <- name + "吧签到成功"
 	<-limit
