@@ -109,6 +109,8 @@ func toSign(name, bduss, tbs string, errCh chan<- error, limit <-chan struct{}, 
 	err := sign.Tosign(name, bduss, tbs)
 	if err != nil {
 		errCh <- err
+		<-limit
+		return
 	}
 	msgCh <- name + "吧签到成功"
 	<-limit
