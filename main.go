@@ -44,9 +44,9 @@ func main() {
 			if err1 != nil || err2 != nil {
 				continue
 			}
-			errCh := make(chan error, 10)
+			errCh := make(chan error, 20)
 			limit := make(chan struct{}, 10)
-			msgCh := make(chan string, 10)
+			msgCh := make(chan string, 20)
 			sum := len(list)
 			msg := "第" + strconv.Itoa(zanhao+1) + "个账号需要给" + strconv.Itoa(sum) + "个贴吧签到。"
 			sw.WriteString(msg + "\n")
@@ -109,6 +109,8 @@ func toSign(name, bduss, tbs string, errCh chan<- error, limit <-chan struct{}, 
 	err := sign.Tosign(name, bduss, tbs)
 	if err != nil {
 		errCh <- err
+		<-limit
+		return
 	}
 	msgCh <- name + "吧签到成功"
 	<-limit
