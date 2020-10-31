@@ -48,8 +48,10 @@ func main() {
 			limit := make(chan struct{}, 10)
 			msgCh := make(chan string, 20)
 			sum := len(list)
-			msg := "第" + strconv.Itoa(zanhao+1) + "个账号需要给" + strconv.Itoa(sum) + "个贴吧签到。"
-			sw.WriteString(msg + "\n")
+			if i == 0 {
+				msg := "第" + strconv.Itoa(zanhao+1) + "个账号需要给" + strconv.Itoa(sum) + "个贴吧签到。"
+				sw.WriteString(msg + "\n")
+			}
 			if sum == 0 {
 				ok = true
 				break
