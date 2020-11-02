@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"os"
@@ -25,6 +26,7 @@ func main() {
 			var wait sync.WaitGroup
 			var tbs string
 			var list []string
+			cxt, cancel := context.WithCancel(context.Background())
 			wait.Add(2)
 			go func() {
 				tbs, err1 = sign.Getbs(v)
@@ -56,10 +58,15 @@ func main() {
 				ok = true
 				break
 			}
+
 			go func() {
 				for _, name := range list {
-					limit <- struct{}{}
-					go toSign(name, v, tbs, errCh, limit, msgCh)
+					select {
+					case limit <- struct{}{}:
+						go toSign(cxt, name, v, tbs, errCh, limit, msgCh)
+					case <-cxt.Done():
+						return
+					}
 				}
 			}()
 			var s int
@@ -71,10 +78,12 @@ func main() {
 					s++
 					if s == sum {
 						ok = true
+						cancel()
 						break finish
 					}
 				case err := <-errCh:
 					log.Println(err)
+					cancel()
 					continue finish
 				}
 			}
@@ -107,15 +116,23 @@ func main() {
 	}
 }
 
-func toSign(name, bduss, tbs string, errCh chan<- error, limit <-chan struct{}, msgCh chan<- string) {
-	err := sign.Tosign(name, bduss, tbs)
+func toSign(cxt context.Context, name, bduss, tbs string, errCh chan<- error, limit <-chan struct{}, msgCh chan<- string) {
+	err := sign.Tosign(cxt, name, bduss, tbs)
 	if err != nil {
-		errCh <- err
-		<-limit
+		select {
+		case errCh <- err:
+			<-limit
+		case <-cxt.Done():
+		}
 		return
 	}
-	msgCh <- name + "吧签到成功"
-	<-limit
+	select {
+	case msgCh <- name + "吧签到成功":
+		<-limit
+	case <-cxt.Done():
+		return
+	}
+
 }
 
 var (

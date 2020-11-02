@@ -1,6 +1,7 @@
 package sign
 
 import (
+	"context"
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
@@ -11,9 +12,9 @@ import (
 	"strings"
 )
 
-func Tosign(name, BDUSS, tbs string) error {
+func Tosign(cxt context.Context, name, BDUSS, tbs string) error {
 	body := "kw=" + name + "&tbs=" + tbs + "&sign=" + enCodeMd5("kw="+name+"tbs="+tbs+"tiebaclient!!!")
-	reqs, err := http.NewRequest("POST", SIGNUEL, strings.NewReader(body))
+	reqs, err := http.NewRequestWithContext(cxt, "POST", SIGNUEL, strings.NewReader(body))
 	if err != nil {
 		return fmt.Errorf("Tosign: %w", err)
 	}
