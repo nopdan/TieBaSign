@@ -29,7 +29,7 @@ func Tosign(cxt context.Context, name, BDUSS, tbs string) error {
 		return fmt.Errorf("Tosign: %w", err)
 	}
 	if rep.StatusCode != 200 {
-		return Not200
+		return Not200{rep.Status}
 	}
 	b, err := ioutil.ReadAll(rep.Body)
 	if err != nil {

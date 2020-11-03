@@ -1,7 +1,6 @@
 package sign
 
 import (
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -28,7 +27,7 @@ func httpget(url, cookie string) ([]byte, error) {
 		return nil, fmt.Errorf("httpget: %w", err)
 	}
 	if rep.StatusCode != 200 {
-		return nil, Not200
+		return nil, Not200{rep.Status}
 	}
 	b, err := ioutil.ReadAll(rep.Body)
 	if err != nil {
@@ -37,4 +36,10 @@ func httpget(url, cookie string) ([]byte, error) {
 	return b, nil
 }
 
-var Not200 = errors.New("not 200")
+type Not200 struct {
+	msg string
+}
+
+func (n Not200) Error() string {
+	return "not 200 is :" + n.msg
+}
