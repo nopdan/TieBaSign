@@ -22,7 +22,7 @@ func Tosign(cxt context.Context, name, BDUSS, tbs string) error {
 	reqs.Header.Set("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4240.111 Safari/537.36")
 	reqs.Header.Set("Cookie", "BDUSS="+BDUSS)
 	rep, err := client.Do(reqs)
-	if rep.Body != nil {
+	if rep != nil {
 		defer rep.Body.Close()
 	}
 	if err != nil {
