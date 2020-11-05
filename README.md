@@ -11,7 +11,11 @@ bduss 可参照[这里](https://jingyan.baidu.com/article/5552ef47e4358c518ffbc9
 
 随后点击 Add secret 即可。
 
-之后点击仓库上方的 Actions，点击“I understand my workflows, go ahead and enable them” ，再打开 `README.md` 任意编辑一次，提交。
+之后点击仓库上方的 Actions，点击`I understand my workflows, go ahead and enable them` 。
+
+再点击左侧的 Auto tieba sign，再点击 `Enable workflow`
+
+最后打开 `README.md` 任意编辑一次，提交。
 
 然后大概会在每天的 0 点和 8 点尝试签到一次。
 
