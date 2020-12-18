@@ -21,7 +21,7 @@ func main() {
 	for zanhao, v := range BDUSS {
 		var ok bool
 	finish:
-		for i := 0; i < 3; i++ {
+		for i := 0; i < 8; i++ {
 			var err1, err2 error
 			var wait sync.WaitGroup
 			var tbs string
