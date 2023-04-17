@@ -1,5 +1,8 @@
 # tiebasign
+
+[![Auto tieba sign](https://github.com/nopdan/tiebasign/actions/workflows/go.yml/badge.svg)](https://github.com/nopdan/tiebasign/actions/workflows/go.yml)
 使用 github actions 的百度贴吧自动签到
+
 ## 使用
 Fork 本项目，点击你 Fork 后的仓库右上角的 settings，点击其中的 secrets。
 
