@@ -21,10 +21,10 @@ jobs:
         go-version: ^1.13
       id: go
 
-    - name: Clone repo from xxmdhs/tiebasign
+    - name: Clone repo from nopdan/tiebasign
       uses: actions/checkout@v2
       with:
-          repository: xxmdhs/tiebasign
+          repository: nopdan/tiebasign
 
     - name: Start sign
       env:
